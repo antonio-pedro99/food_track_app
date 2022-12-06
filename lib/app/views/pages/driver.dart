@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_track_app/app/views/pages/food_by_ingr_page.dart';
+import 'package:food_track_app/app/views/pages/food_by_name_page.dart';
 
 class PageDriver extends StatefulWidget {
   const PageDriver({super.key});
@@ -10,7 +11,7 @@ class PageDriver extends StatefulWidget {
 
 class _PageDriverState extends State<PageDriver> {
   List<Widget> pages = const [
-    FoodByIngridPage(title: "Food By Name"),
+    FoodByNamePage(title: "Food By Name"),
     FoodByIngridPage(title: "Food By Ingredients")
   ];
 
@@ -36,6 +37,7 @@ class _PageDriverState extends State<PageDriver> {
         elevation: 0,
       ),
       body: PageView(
+        physics: const BouncingScrollPhysics(),
         controller: _controller,
         children: pages,
         onPageChanged: (p) {
