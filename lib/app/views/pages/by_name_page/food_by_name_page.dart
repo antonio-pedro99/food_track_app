@@ -41,10 +41,20 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
                             MaterialPageRoute(
                                 builder: (context) => const FoodDetailsPage(
                                     title: "Food Details"))),
-                        child: Container(
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Container(
                             margin: const EdgeInsets.only(bottom: 8),
-                            height: 100,
-                            color: Colors.primaries[index % 10]),
+                            height: 180,
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      "https://spoonacular.com/recipeImages/640803-312x231.jpg",
+                                    ))),
+                          ),
+                        ),
                       );
                     }))
           ],
