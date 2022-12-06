@@ -51,7 +51,7 @@ class _PageDriverState extends State<PageDriver> {
         },
         destinations: const [
           NavigationDestination(
-              icon: Icon(Icons.dining_sharp), label: "Search By Name"),
+              icon: Icon(Icons.dinner_dining), label: "Search By Name"),
           NavigationDestination(
               icon: Icon(Icons.dining_sharp), label: "Search By Ingredients")
         ],
