@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_track_app/app/views/pages/details_page.dart';
 import 'package:food_track_app/app/views/widgets/text_field.dart';
 
 class FoodByNamePage extends StatefulWidget {
@@ -35,10 +36,16 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
                 child: ListView.builder(
                     itemCount: 10,
                     itemBuilder: (context, index) {
-                      return Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          height: 100,
-                          color: Colors.primaries[index % 10]);
+                      return GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => const FoodDetailsPage(
+                                    title: "Food Details"))),
+                        child: Container(
+                            margin: const EdgeInsets.only(bottom: 8),
+                            height: 100,
+                            color: Colors.primaries[index % 10]),
+                      );
                     }))
           ],
         ),
