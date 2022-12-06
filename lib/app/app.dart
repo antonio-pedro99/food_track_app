@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_track_app/app/views/pages/driver.dart';
+import 'package:food_track_app/app/views/theme/theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,9 +10,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Food Track',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppThemeSchema.light,
+      darkTheme: AppThemeSchema.dark,
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
       home: const PageDriver(title: 'Flutter Demo Home Page'),
     );
   }
