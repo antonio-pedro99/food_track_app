@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_track_app/app/views/pages/details_page/carousel.dart';
 
 class FoodDetailsPage extends StatefulWidget {
   const FoodDetailsPage({super.key, required this.title});
@@ -8,6 +9,7 @@ class FoodDetailsPage extends StatefulWidget {
 }
 
 class _FoodDetailsPageState extends State<FoodDetailsPage> {
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,20 +18,27 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
           SliverAppBar(
             title: Text(widget.title),
             floating: true,
-            expandedHeight: 200,
-            flexibleSpace: FlexibleSpaceBar(
+            expandedHeight: 300,
+            flexibleSpace:   FlexibleSpaceBar(
+              centerTitle: true,
               background: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: kToolbarHeight),
-                  child: Column(
-                    children: const [Text("Antonio Pedro"), Text(" Pedro")],
-                  ),
+                  padding:
+                      const EdgeInsets.only(top: kToolbarHeight, left: 8, right: 8),
+                  child: CustomCarouselSlider(itemCount: 2, items: [ Container(
+                color: Colors.red,
+                height: 200,
+              ),
+              Container(
+                color: Colors.blue,
+                height: 200,
+              )]),
                 ),
               ),
             ),
           ),
           SliverList(
-              delegate: SliverChildListDelegate([
+              delegate: SliverChildListDelegate(const [
             Text("Antonio Pedro"),
             Text(" Pedro"),
             Text("Antonio Pedro"),
