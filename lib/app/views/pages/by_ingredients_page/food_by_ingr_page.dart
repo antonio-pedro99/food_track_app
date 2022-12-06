@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_track_app/app/views/pages/results_page.dart';
+import 'package:food_track_app/app/views/pages/by_ingredients_page/results_page.dart';
 import 'package:food_track_app/app/views/theme/colors.dart';
 import 'package:food_track_app/app/views/widgets/text_field.dart';
 

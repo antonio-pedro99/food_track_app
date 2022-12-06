@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_track_app/app/views/pages/food_by_ingr_page.dart';
-import 'package:food_track_app/app/views/pages/food_by_name_page.dart';
+import 'package:food_track_app/app/views/pages/by_ingredients_page/food_by_ingr_page.dart';
+import 'package:food_track_app/app/views/pages/by_name_page/food_by_name_page.dart';
 
 class PageDriver extends StatefulWidget {
   const PageDriver({super.key});

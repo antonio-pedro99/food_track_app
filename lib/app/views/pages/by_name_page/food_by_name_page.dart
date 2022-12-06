@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_track_app/app/views/pages/details_page.dart';
+import 'package:food_track_app/app/views/pages/details_page/details_page.dart';
 import 'package:food_track_app/app/views/widgets/text_field.dart';
 
 class FoodByNamePage extends StatefulWidget {
