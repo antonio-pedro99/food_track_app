@@ -15,6 +15,9 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.receipt_long))
+        ],
       ),
       body: Center(
         child: Column(

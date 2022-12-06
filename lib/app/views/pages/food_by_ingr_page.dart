@@ -15,6 +15,9 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.receipt_long))
+        ],
       ),
       body: Center(
         child: Column(
