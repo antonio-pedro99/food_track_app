@@ -4,11 +4,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../app/views/models/food_info.dart';
+import '../views/models/food_info.dart';
 
 class FoodProvider with ChangeNotifier {
-  Set<String> set = {};
   final List<Food> _fetchedFoodList = [];
+  bool isLoading = false;
 
   Future<List<Food>> fetchFoodDetailsUsingDishNames(
     BuildContext context,
@@ -70,9 +70,15 @@ class FoodProvider with ChangeNotifier {
           ingredientNameList: recipe["ingredientLines"] as List<dynamic>,
           ingredientList: recipe["ingredients"] as List<dynamic>,
         ));
+
         notifyListeners();
       }
     }
     return _fetchedFoodList;
+  }
+
+  void load() {
+    isLoading = true;
+    notifyListeners();
   }
 }

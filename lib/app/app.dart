@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_track_app/app/providers/food_provider.dart';
 import 'package:food_track_app/app/views/pages/driver.dart';
 import 'package:food_track_app/app/views/theme/theme.dart';
-import 'package:food_track_app/providers/api_details.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,9 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: FoodProvider(),
-        ),
+        ChangeNotifierProvider(create: (_) => FoodProvider()),
       ],
       child: MaterialApp(
         title: 'Food Track',
