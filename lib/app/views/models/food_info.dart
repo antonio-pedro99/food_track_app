@@ -1,6 +1,4 @@
-// ignore_for_file: camel_case_types
-
-class foodInformation {
+class Food {
   String foodId;
   String label;
   String knownAs;
@@ -10,7 +8,7 @@ class foodInformation {
   List<dynamic> ingredientNameList;
   List<dynamic> ingredientList;
 
-  foodInformation({
+  Food({
     required this.foodId,
     required this.label,
     required this.knownAs,

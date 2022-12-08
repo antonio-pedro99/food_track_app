@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:food_track_app/app/views/models/food_info.dart';
 import 'package:food_track_app/app/views/pages/details_page/carousel.dart';
 import 'package:food_track_app/app/views/widgets/nutrient_tile.dart';
 
 class FoodDetailsPage extends StatefulWidget {
-  const FoodDetailsPage({super.key, required this.title, this.tag});
+  const FoodDetailsPage(
+      {super.key, required this.title, required this.food, this.tag});
   final String title;
   final String? tag;
+  final Food food;
   @override
   State<FoodDetailsPage> createState() => _FoodDetailsPageState();
 }
@@ -27,14 +30,14 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                   padding: const EdgeInsets.only(
                       top: kToolbarHeight, left: 8, right: 8),
                   child: Hero(
-                    tag: widget.tag!,
+                    tag: widget,
                     child: CustomCarouselSlider(itemCount: 2, items: [
                       SizedBox(
                         height: 200,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.network(
-                            "https://www.edamam.com/food-img/d33/d338229d774a743f7858f6764e095878.jpg",
+                            widget.food.image,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -54,7 +57,7 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
             sliver: SliverList(
                 delegate: SliverChildListDelegate([
               Text(
-                'Chicken Masala',
+                widget.food.label,
                 style: Theme.of(context).textTheme.headline6,
               ),
               const SizedBox(height: 8),

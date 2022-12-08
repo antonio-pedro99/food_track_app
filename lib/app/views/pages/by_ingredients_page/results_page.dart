@@ -20,16 +20,7 @@ class _ResultPagesState extends State<ResultPages> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          const FoodDetailsPage(title: "Food Details"))),
-                  child: const FoodTile(),
-                );
-              }),
+          child: Container(),
         ),
       ),
     );
