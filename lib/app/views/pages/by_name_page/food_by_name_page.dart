@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_track_app/app/views/pages/details_page/details_page.dart';
+import 'package:food_track_app/app/views/widgets/food_tile.dart';
 import 'package:food_track_app/app/views/widgets/text_field.dart';
 
 class FoodByNamePage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Column(
           children: <Widget>[
             CustomTextField(
@@ -41,20 +42,7 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
                             MaterialPageRoute(
                                 builder: (context) => const FoodDetailsPage(
                                     title: "Food Details"))),
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 8),
-                            height: 180,
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      "https://spoonacular.com/recipeImages/640803-312x231.jpg",
-                                    ))),
-                          ),
-                        ),
+                        child: const FoodTile(),
                       );
                     }))
           ],
