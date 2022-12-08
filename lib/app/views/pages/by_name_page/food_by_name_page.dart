@@ -40,9 +40,9 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
                       return GestureDetector(
                         onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) => const FoodDetailsPage(
-                                    title: "Food Details"))),
-                        child: const FoodTile(),
+                                builder: (context) => FoodDetailsPage(
+                                    tag: "food$index", title: "Food Details"))),
+                        child: Hero(tag: "food$index", child: const FoodTile()),
                       );
                     }))
           ],

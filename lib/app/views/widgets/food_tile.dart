@@ -6,14 +6,12 @@ class FoodTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 1,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 200,
             width: MediaQuery.of(context).size.width,
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
@@ -22,6 +20,7 @@ class FoodTile extends StatelessWidget {
               child: Image.network(
                 "https://www.edamam.com/food-img/d33/d338229d774a743f7858f6764e095878.jpg",
                 fit: BoxFit.cover,
+                height: 200,
               ),
             ),
           ),

@@ -22,7 +22,7 @@ class AppColorSchema {
     outline: Color(0xff62625c),
     background: Color(0xfffcf7ec),
     onBackground: Color(0xff131312),
-    surface: Color(0xfffdfbf5),
+    surface: Color.fromARGB(255, 250, 243, 222),
     onSurface: Color(0xff090909),
     surfaceVariant: Color(0xfffcf7ec),
     onSurfaceVariant: Color(0xff131312),
