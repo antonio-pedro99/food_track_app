@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
+import 'package:food_track_app/app/views/pages/details_page/details_page.dart';
+import 'package:food_track_app/app/views/widgets/food_tile.dart';
 
 class ResultPages extends StatefulWidget {
   const ResultPages({super.key});
@@ -16,14 +17,21 @@ class _ResultPagesState extends State<ResultPages> {
       appBar: AppBar(
         title: const Text("Result"),
       ),
-      body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                height: 100,
-                color: Colors.primaries[index % 10]);
-          }),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          const FoodDetailsPage(title: "Food Details"))),
+                  child: const FoodTile(),
+                );
+              }),
+        ),
+      ),
     );
   }
 }
