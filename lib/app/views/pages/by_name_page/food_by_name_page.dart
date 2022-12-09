@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_track_app/app/providers/food_provider.dart';
-import 'package:food_track_app/app/views/models/food_info.dart';
+import 'package:food_track_app/app/models/food_info.dart';
 import 'package:food_track_app/app/views/pages/details_page/details_page.dart';
 import 'package:food_track_app/app/views/widgets/food_tile.dart';
 import 'package:food_track_app/app/views/widgets/text_field.dart';

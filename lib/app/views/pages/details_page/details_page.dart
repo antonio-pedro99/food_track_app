@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_track_app/app/views/models/food_info.dart';
-import 'package:food_track_app/app/views/pages/details_page/carousel.dart';
+import 'package:food_track_app/app/models/food_info.dart';
+import 'package:food_track_app/app/models/ingredient.dart';
+import 'package:food_track_app/app/views/widgets/ingredient_tile.dart';
 import 'package:food_track_app/app/views/widgets/nutrient_tile.dart';
 
 class FoodDetailsPage extends StatefulWidget {
@@ -14,6 +15,16 @@ class FoodDetailsPage extends StatefulWidget {
 }
 
 class _FoodDetailsPageState extends State<FoodDetailsPage> {
+  var ingredients = <Ingredient>[];
+  @override
+  void initState() {
+    super.initState();
+
+    ingredients = widget.food.ingredientList
+        .map<Ingredient>((e) => Ingredient.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,37 +36,18 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              background: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: kToolbarHeight, left: 8, right: 8),
-                  child: Hero(
-                    tag: widget,
-                    child: CustomCarouselSlider(itemCount: 2, items: [
-                      SizedBox(
-                        height: 200,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            widget.food.image,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        color: Colors.blue,
-                        height: 200,
-                      )
-                    ]),
-                  ),
-                ),
-              ),
+              background: Hero(
+                  tag: widget.tag!,
+                  child: Image.network(
+                    widget.food.image,
+                    fit: BoxFit.cover,
+                  )),
             ),
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             sliver: SliverList(
-                delegate: SliverChildListDelegate([
+                delegate: SliverChildListDelegate.fixed([
               Text(
                 widget.food.label,
                 style: Theme.of(context).textTheme.headline6,
@@ -64,17 +56,34 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
               const NutrientTile(),
               const SizedBox(height: 24),
               Text(
-                'Recipes',
+                'Ingredients',
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
                     .copyWith(fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 8),
-              Container(
+              const SizedBox(height: 24),
+              SizedBox(
                 height: 300,
-                child: ListView(),
-              )
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: ingredients.length,
+                    itemExtent: 200,
+                    itemBuilder: ((context, index) {
+                      return IngredientTile(
+                        ingredient: ingredients[index],
+                      );
+                    })),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'How to Cook(video)',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 24),
             ])),
           )
         ],

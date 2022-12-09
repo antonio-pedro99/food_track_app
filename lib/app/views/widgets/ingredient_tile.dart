@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_track_app/app/models/food_info.dart';
+import 'package:food_track_app/app/models/ingredient.dart';
 
-class FoodTile extends StatelessWidget {
-  const FoodTile({super.key, this.food});
+class IngredientTile extends StatelessWidget {
+  const IngredientTile({super.key, required this.ingredient});
 
-  final Food? food;
+  final Ingredient ingredient;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -13,16 +13,16 @@ class FoodTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
+          Container(
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(12),
                   bottomRight: Radius.circular(12)),
               child: Image.network(
-                food!.image,
-                fit: BoxFit.cover,
-                height: 200,
+                ingredient.image!,
+                fit: BoxFit.fitWidth,
+                height: 150,
+                width: 200,
               ),
             ),
           ),
@@ -31,17 +31,26 @@ class FoodTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  food!.label,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
+                Text(ingredient.text!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(fontSize: 16)),
                 const SizedBox(height: 8),
                 Text(
-                  food!.knownAs,
+                  ingredient.food!,
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2!
-                      .copyWith(color: Colors.black.withOpacity(.6)),
+                      .copyWith(color: Colors.black.withOpacity(.8)),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "Measure: ${ingredient.measure}",
+                  style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                      color: Colors.black.withOpacity(.6),
+                      fontSize: 13,
+                      fontWeight: FontWeight.normal),
                 ),
               ],
             ),
