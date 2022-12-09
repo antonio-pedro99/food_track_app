@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_track_app/app/providers/food_provider.dart';
 import 'package:food_track_app/app/models/food_info.dart';
 import 'package:food_track_app/app/views/pages/details_page/details_page.dart';
+import 'package:food_track_app/app/views/pages/records_page/records_page.dart';
 import 'package:food_track_app/app/views/widgets/food_tile.dart';
 import 'package:food_track_app/app/views/widgets/text_field.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,12 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.receipt_long))
+          IconButton(
+              onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => const FoodRecordPage()),
+                  ),
+              icon: const Icon(Icons.receipt_long))
         ],
       ),
       body: Padding(
@@ -48,7 +54,6 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
             ),
             const SizedBox(height: 24),
             Flexible(child: Builder(builder: (context) {
-              print("Result ${foodProvider.isLoading}");
               if (!foodProvider.isLoading) {
                 return Center(
                     child: Text("${foodProvider.isLoading} Search Something"));
@@ -90,34 +95,3 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
     );
   }
 }
-/* 
-FutureBuilder<List<Food>>(
-                  future: foodProvider.fetchFoodDetailsUsingDishNames(
-                      context, searchEditingController.text),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text(snapshot.error.toString()));
-                    }
-                    var result = snapshot.data!;
-                    return ListView.builder(
-                        itemCount: result.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => FoodDetailsPage(
-                                      food: result[index],
-                                      tag: "${result[index].foodId}$index",
-                                      title: "Food Details")),
-                            ),
-                            child: Hero(
-                                tag: "${result[index].foodId}$index",
-                                child: FoodTile(
-                                  food: result[index],
-                                )),
-                          );
-                        });
-                  },
-            ) */

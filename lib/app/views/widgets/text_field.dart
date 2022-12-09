@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       child: TextField(
         controller: controller,
-        onSubmitted: onEnter,
+        onChanged: onEnter,
         decoration: InputDecoration(
             hintText: hint,
             suffixIcon: Icon(icon),
