@@ -38,7 +38,7 @@ class IngredientTile extends StatelessWidget {
                         .copyWith(fontSize: 16)),
                 const SizedBox(height: 8),
                 Text(
-                  ingredient.food!,
+                  ingredient.foodCategory!,
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2!
