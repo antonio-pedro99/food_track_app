@@ -17,11 +17,15 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
       TextEditingController();
   final TextEditingController nutritionEditingController =
       TextEditingController();
+
   RangeValues calories = const RangeValues(0, 100);
   RangeValues protein = const RangeValues(0, 100);
   RangeValues fat = const RangeValues(0, 100);
   RangeValues carbohydrates = const RangeValues(0, 100);
   RangeValues sugar = const RangeValues(0, 100);
+
+  var key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,10 +40,19 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            CustomTextField(
-              controller: ingredientsEditingController,
-              hint: "Enter any ingredients",
-              icon: Icons.search,
+            Form(
+              key: key,
+              child: CustomTextField(
+                controller: ingredientsEditingController,
+                hint: "Enter any ingredients",
+                icon: Icons.search,
+                onValidate: (value) {
+                  if (value!.isEmpty) {
+                    return "Please fill this";
+                  }
+                  return null;
+                },
+              ),
             ),
             const SizedBox(height: 8),
             Expanded(
@@ -113,9 +126,18 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
                     height: 56,
                     minWidth: MediaQuery.of(context).size.width,
                     color: AppColorSchema.flexSchemeLight.primary,
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const ResultPages())),
+                    onPressed: () {
+                      if (key.currentState!.validate()) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ResultPages(
+                                  query: Query(
+                                      ingredients: ingredientsEditingController
+                                          .text
+                                          .split(","),
+                                      nutrients: []),
+                                )));
+                      }
+                    },
                     child: const Text("Search"))
               ],
             ))
@@ -124,4 +146,11 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
       ),
     );
   }
+}
+
+class Query {
+  final List<String> nutrients;
+  final List<String> ingredients;
+
+  Query({required this.ingredients, required this.nutrients});
 }

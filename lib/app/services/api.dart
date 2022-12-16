@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:food_track_app/app/models/food.dart';
 import 'package:food_track_app/app/models/food_info.dart';
 import 'package:food_track_app/app/models/food_result.dart';
 import 'package:http/http.dart' as http;
@@ -73,7 +74,78 @@ class RestAPIWrapper {
         ));
       }
     }
-    print("Result for $searchedFood is $_fetchedFoodList");
+
+    print(_fetchedFoodList);
     return _fetchedFoodList;
   }
+
+  static Future<List<FoodByIngredient>?> fetchFoodByIngredients(
+      List<String> ingList) async {
+    final dataBaseResponse =
+        await http.get(Uri.parse(_getFoodByIngredientsUrl(ingList)));
+    final extractedFoodDetails =
+        json.decode(dataBaseResponse.body) as List<dynamic>;
+    List<FoodByIngredient> fetchedFoodList = [];
+
+    for (int i = 0; i < extractedFoodDetails.length; i++) {
+      String foodId = extractedFoodDetails[i]['id'].toString();
+      String title = extractedFoodDetails[i]['title'].toString();
+      String image = extractedFoodDetails[i]['image'].toString();
+
+      List<dynamic> list1 =
+          extractedFoodDetails[i]['missedIngredients'] as List<dynamic>;
+      List<dynamic> list2 =
+          extractedFoodDetails[i]['usedIngredients'] as List<dynamic>;
+      List<dynamic> list3 = [list1, list2].expand((x) => x).toList();
+
+      final dataBaseResponse2 = await http.get(Uri.parse(
+          _getYoutubeVideoUniqueIdUrl(extractedFoodDetails[i]['title'])));
+      final extractedVideoDetails =
+          json.decode(dataBaseResponse2.body) as Map<String, dynamic>;
+      final foodVideoIdList = [];
+
+      for (int j = 0; j < min(3, extractedVideoDetails['items'].length); j++) {
+        String videoId = extractedVideoDetails['items'][j]['id']['videoId'];
+        foodVideoIdList.add(_getYoutubeVideoLink(videoId));
+      }
+
+      fetchedFoodList.add(FoodByIngredient(
+        foodId: foodId,
+        title: title,
+        image: image,
+        ingList: list3,
+        foodVideoList: foodVideoIdList,
+      ));
+    }
+
+    return fetchedFoodList;
+  }
+}
+
+String _getFoodByIngredientsUrl(List<String> ingList) {
+  String val = "";
+  if (ingList.isEmpty) {
+    val = "salt";
+  } else {
+    for (int i = 0; i < ingList.length; i++) {
+      val += "${ingList[i]},+";
+    }
+  }
+
+  String url =
+      "https://api.spoonacular.com/recipes/findByIngredients?ingredients=$val&number=2&apiKey=c113a9368f95459b97eccc5ff749e30d";
+  return url;
+}
+
+String _getYoutubeVideoUniqueIdUrl(String foodName) {
+  String url =
+      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20${foodName}%20&key=AIzaSyA8KD55XiccMczG_5LHEl96coRYD-0AQ1M";
+
+  return url;
+}
+
+String _getYoutubeVideoLink(String videoId) {
+  String url = "https://www.youtube.com/watch?v=$videoId";
+
+  return url;
 }

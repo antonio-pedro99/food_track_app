@@ -7,20 +7,23 @@ class CustomTextField extends StatelessWidget {
       this.hint,
       this.onChanged,
       this.onEnter,
+      this.onValidate,
       this.icon = Icons.search});
 
   final String? hint;
   final TextEditingController controller;
   final IconData? icon;
   final Function(String)? onEnter;
-   final Function(String)? onChanged;
+  final Function(String)? onChanged;
+  final String? Function(String?)? onValidate;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         onChanged: onChanged,
-        onSubmitted: onEnter,
+        validator: onValidate,
+        onFieldSubmitted: onEnter,
         decoration: InputDecoration(
             hintText: hint,
             suffixIcon: Icon(icon),

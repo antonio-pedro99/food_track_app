@@ -1,33 +1,35 @@
 import 'dart:async';
 
 import 'package:food_track_app/app/blocs/bloc.dart';
-import 'package:food_track_app/app/models/food_info.dart';
+import 'package:food_track_app/app/models/food.dart';
 import 'package:food_track_app/app/services/api.dart';
 import 'package:rxdart/rxdart.dart';
-
-class FoodByNameListBloc implements Bloc {
+/* 
+class FoodsByIngredientsList extends Bloc {
   final _client = RestAPIWrapper();
   final _searchQueryController = StreamController<String?>();
   Sink<String?> get searchQuery => _searchQueryController.sink;
-  late Stream<List<Food>?> foodsStreams;
+  late Stream<List<FoodByIngredient>?> foodsStreams;
 
-  FoodByNameListBloc() {
+  FoodsByIngredientsList() {
     foodsStreams = _searchQueryController.stream
         .startWith(null) // 1
-        .debounceTime(const Duration(milliseconds: 2000)) // 2
+        .debounceTime(const Duration(milliseconds: 800)) // 2
         .switchMap(
             // 3
             (query) {
-      print(query);
       return _client
-          .fetchFoodDetailsUsingDishNames(query)
+          .fetchFoodByIngredients(query!.split(","))
           .asStream()
           .startWith(null);
     });
   }
 
+  void searchFood(String name) => _searchQueryController.add(name);
+
+  Stream<List<FoodByIngredient>?> get results => foodsStreams;
+
   @override
-  void dispose() {
-    _searchQueryController.close();
-  }
+  void dispose() {}
 }
+ */
