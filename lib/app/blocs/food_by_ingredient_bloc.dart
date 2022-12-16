@@ -4,7 +4,7 @@ import 'package:food_track_app/app/blocs/bloc.dart';
 import 'package:food_track_app/app/models/food.dart';
 import 'package:food_track_app/app/services/api.dart';
 import 'package:rxdart/rxdart.dart';
-
+/* 
 class FoodsByIngredientsList extends Bloc {
   final _client = RestAPIWrapper();
   final _searchQueryController = StreamController<String?>();
@@ -24,6 +24,12 @@ class FoodsByIngredientsList extends Bloc {
           .startWith(null);
     });
   }
+
+  void searchFood(String name) => _searchQueryController.add(name);
+
+  Stream<List<FoodByIngredient>?> get results => foodsStreams;
+
   @override
   void dispose() {}
 }
+ */

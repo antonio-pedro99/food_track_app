@@ -5,7 +5,7 @@ class Ingredient {
   String? food;
   double? weight;
   String? foodCategory;
-  String? foodId;
+  int? foodId;
   String? image;
 
   Ingredient(
@@ -19,13 +19,13 @@ class Ingredient {
       this.image});
 
   Ingredient.fromJson(Map<String, dynamic> json) {
-    text = json['text'];
-    quantity = json['quantity'];
-    measure = json['measure'];
-    food = json['food'];
-    weight = json['weight'];
-    foodCategory = json['foodCategory'];
-    foodId = json['foodId'];
+    text = json['text'] ?? json["name"];
+    quantity = json['quantity'] ?? json["amount"];
+    measure = json['measure'] ?? json["unit"];
+    food = json['food'] ?? json["originalName"];
+    weight = json['weight'] ?? 0;
+    foodCategory = json['foodCategory'] ?? json["aisle"];
+    foodId = json['foodId'] ?? json["id"];
     image = json['image'];
   }
 

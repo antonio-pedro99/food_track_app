@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:food_track_app/app/models/food.dart';
 import 'package:food_track_app/app/models/food_info.dart';
 
 class FoodTile extends StatelessWidget {
-  const FoodTile({super.key, this.food});
+  const FoodTile({super.key, this.food, this.foodByIngredient});
 
   final Food? food;
+  final FoodByIngredient? foodByIngredient;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -20,7 +22,7 @@ class FoodTile extends StatelessWidget {
                   bottomLeft: Radius.circular(12),
                   bottomRight: Radius.circular(12)),
               child: Image.network(
-                food!.image,
+                food == null ? foodByIngredient!.image : food!.image,
                 fit: BoxFit.cover,
                 height: 200,
               ),
@@ -32,17 +34,19 @@ class FoodTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  food!.label,
+                  food == null ? foodByIngredient!.title : food!.label,
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  food!.knownAs,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2!
-                      .copyWith(color: Colors.black.withOpacity(.6)),
-                ),
+                food == null
+                    ? Container()
+                    : Text(
+                        food!.knownAs,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2!
+                            .copyWith(color: Colors.black.withOpacity(.6)),
+                      )
               ],
             ),
           ),

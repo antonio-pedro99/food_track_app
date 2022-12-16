@@ -79,7 +79,7 @@ class RestAPIWrapper {
     return _fetchedFoodList;
   }
 
-  Future<List<FoodByIngredient>?> fetchFoodByIngredients(
+  static Future<List<FoodByIngredient>?> fetchFoodByIngredients(
       List<String> ingList) async {
     final dataBaseResponse =
         await http.get(Uri.parse(_getFoodByIngredientsUrl(ingList)));
@@ -145,7 +145,7 @@ String _getYoutubeVideoUniqueIdUrl(String foodName) {
 }
 
 String _getYoutubeVideoLink(String videoId) {
-  String url = "https://www.youtube.com/watch?v=${videoId}";
+  String url = "https://www.youtube.com/watch?v=$videoId";
 
   return url;
 }

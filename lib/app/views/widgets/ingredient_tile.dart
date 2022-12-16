@@ -21,6 +21,9 @@ class IngredientTile extends StatelessWidget {
                   bottomRight: Radius.circular(12)),
               child: CachedNetworkImage(
                 imageUrl: ingredient.image!,
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fitHeight,
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) =>
