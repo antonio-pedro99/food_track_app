@@ -44,7 +44,6 @@ class _ResultPagesState extends State<ResultPages> {
                 return ListView.builder(
                     itemCount: results!.length,
                     itemBuilder: (context, index) {
-                      print(results[index].foodVideoList);
                       return GestureDetector(
                         onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(

@@ -109,7 +109,7 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
               ),
               widget.foodByIngredient != null
                   ? SizedBox(
-                      height: MediaQuery.of(context).size.height * .5,
+                      height: MediaQuery.of(context).size.height * .35,
                       child: ListView.builder(
                           itemCount: videos.length,
                           itemBuilder: (context, index) {
