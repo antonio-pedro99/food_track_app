@@ -55,7 +55,7 @@ class _FoodListScreenState extends State<FoodListScreen> {
             controller: searchEditingController,
             hint: "Type the name of the Food",
             icon: Icons.search,
-            /*  onChanged: bloc.searchQuery.add, */
+            onChanged: bloc.searchQuery.add,
             onEnter: bloc.searchQuery.add,
           ),
           const SizedBox(height: 24),
@@ -71,31 +71,41 @@ Widget _buildResults(FoodByNameListBloc bloc) {
     stream: bloc.foodsStreams,
     builder: (context, snapshot) {
       // 2
-      final results = snapshot.data;
-      if (results == null) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
         return const Center(child: CircularProgressIndicator());
-      } else if (results.isEmpty) {
-        return const Center(child: Text('No Results'));
+      } else if (snapshot.connectionState == ConnectionState.active) {
+        final results = snapshot.data;
+        if (results == null) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (results.isEmpty) {
+          return const Center(child: Text('No Results'));
+        }
+
+        return ListView.builder(
+            itemCount: results.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => FoodDetailsPage(
+                          food: results[index],
+                          tag: "${results[index].foodId}$index",
+                          title: "Food Details")),
+                ),
+                child: Hero(
+                    tag: "${results[index].foodId}$index",
+                    child: FoodTile(
+                      food: results[index],
+                    )),
+              );
+            });
+      } else if (snapshot.connectionState == ConnectionState.none) {
+        return const Center(child: Text("Search Something"));
       }
 
-      return ListView.builder(
-          itemCount: results.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => FoodDetailsPage(
-                        food: results[index],
-                        tag: "${results[index].foodId}$index",
-                        title: "Food Details")),
-              ),
-              child: Hero(
-                  tag: "${results[index].foodId}$index",
-                  child: FoodTile(
-                    food: results[index],
-                  )),
-            );
-          });
+      return Container(color: Colors.yellow);
     },
   );
 }

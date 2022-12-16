@@ -17,11 +17,13 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
       TextEditingController();
   final TextEditingController nutritionEditingController =
       TextEditingController();
+
   RangeValues calories = const RangeValues(0, 100);
   RangeValues protein = const RangeValues(0, 100);
   RangeValues fat = const RangeValues(0, 100);
   RangeValues carbohydrates = const RangeValues(0, 100);
   RangeValues sugar = const RangeValues(0, 100);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,9 +115,16 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
                     height: 56,
                     minWidth: MediaQuery.of(context).size.width,
                     color: AppColorSchema.flexSchemeLight.primary,
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const ResultPages())),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ResultPages(
+                                query: Query(
+                                    ingredients: ingredientsEditingController
+                                        .text
+                                        .split(","),
+                                    nutrients: []),
+                              )));
+                    },
                     child: const Text("Search"))
               ],
             ))
@@ -124,4 +133,11 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
       ),
     );
   }
+}
+
+class Query {
+  final List<String?> nutrients;
+  final List<String?> ingredients;
+
+  Query({required this.ingredients, required this.nutrients});
 }
