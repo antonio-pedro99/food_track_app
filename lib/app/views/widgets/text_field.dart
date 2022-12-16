@@ -5,6 +5,7 @@ class CustomTextField extends StatelessWidget {
       {super.key,
       required this.controller,
       this.hint,
+      this.onChanged,
       this.onEnter,
       this.icon = Icons.search});
 
@@ -12,12 +13,14 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final IconData? icon;
   final Function(String)? onEnter;
+   final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextField(
         controller: controller,
-        onChanged: onEnter,
+        onChanged: onChanged,
+        onSubmitted: onEnter,
         decoration: InputDecoration(
             hintText: hint,
             suffixIcon: Icon(icon),

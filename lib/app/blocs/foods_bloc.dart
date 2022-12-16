@@ -14,11 +14,10 @@ class FoodByNameListBloc implements Bloc {
   FoodByNameListBloc() {
     foodsStreams = _searchQueryController.stream
         .startWith(null) // 1
-        .debounceTime(const Duration(milliseconds: 1000)) // 2
+        .debounceTime(const Duration(milliseconds: 800)) // 2
         .switchMap(
             // 3
             (query) {
-      print(query);
       return _client
           .fetchFoodDetailsUsingDishNames(query)
           .asStream()

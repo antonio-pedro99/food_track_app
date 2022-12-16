@@ -42,77 +42,83 @@ class _FoodByIngridPageState extends State<FoodByIngridPage> {
               icon: Icons.search,
             ),
             const SizedBox(height: 8),
-            const Text("Select Protein"),
-            RangeSlider(
-                values: protein,
-                //  label: "$protein",
-                labels: RangeLabels(protein.start.toStringAsFixed(1),
-                    protein.end.toStringAsFixed(1)),
-                min: 0,
-                max: 100,
-                divisions: 8,
-                onChanged: ((value) {
-                  setState(() => protein = value);
-                })),
-            const SizedBox(height: 8),
-            const Text("Select Fat"),
-            RangeSlider(
-                values: fat,
-                labels: RangeLabels(
-                    fat.start.toStringAsFixed(1), fat.end.toStringAsFixed(1)),
-                min: 0,
-                max: 100,
-                divisions: 8,
-                onChanged: ((value) {
-                  setState(() => fat = value);
-                })),
-            const SizedBox(height: 8),
-            const Text("Select calories"),
-            RangeSlider(
-                values: calories,
-                labels: RangeLabels(calories.start.toStringAsFixed(1),
-                    calories.end.toStringAsFixed(1)),
-                min: 0,
-                max: 100,
-                divisions: 8,
-                onChanged: ((value) {
-                  setState(() => calories = value);
-                })),
-            const SizedBox(height: 8),
-            const Text("Select carbonates"),
-            RangeSlider(
-                values: carbohydrates,
-                labels: RangeLabels(carbohydrates.start.toStringAsFixed(1),
-                    carbohydrates.end.toStringAsFixed(1)),
-                min: 0,
-                max: 100,
-                divisions: 8,
-                onChanged: ((value) {
-                  setState(() => carbohydrates = value);
-                })),
-            const SizedBox(height: 8),
-            const Text("Select sugar"),
-            RangeSlider(
-                values: sugar,
-                labels: RangeLabels(sugar.start.toStringAsFixed(1),
-                    sugar.end.toStringAsFixed(1)),
-                min: 0,
-                max: 100,
-                divisions: 8,
-                onChanged: ((value) {
-                  setState(() => sugar = value);
-                })),
-            const Spacer(),
-            MaterialButton(
-                hoverColor: Colors.grey,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(55)),
-                height: 56,
-                minWidth: MediaQuery.of(context).size.width,
-                color: AppColorSchema.flexSchemeLight.primary,
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ResultPages())),
-                child: const Text("Search"))
+            Expanded(
+                child: ListView(
+              children: [
+                const Text("Select Protein"),
+                RangeSlider(
+                    values: protein,
+                    //  label: "$protein",
+                    labels: RangeLabels(protein.start.toStringAsFixed(1),
+                        protein.end.toStringAsFixed(1)),
+                    min: 0,
+                    max: 100,
+                    divisions: 8,
+                    onChanged: ((value) {
+                      setState(() => protein = value);
+                    })),
+                const SizedBox(height: 8),
+                const Text("Select Fat"),
+                RangeSlider(
+                    values: fat,
+                    labels: RangeLabels(fat.start.toStringAsFixed(1),
+                        fat.end.toStringAsFixed(1)),
+                    min: 0,
+                    max: 100,
+                    divisions: 8,
+                    onChanged: ((value) {
+                      setState(() => fat = value);
+                    })),
+                const SizedBox(height: 8),
+                const Text("Select calories"),
+                RangeSlider(
+                    values: calories,
+                    labels: RangeLabels(calories.start.toStringAsFixed(1),
+                        calories.end.toStringAsFixed(1)),
+                    min: 0,
+                    max: 100,
+                    divisions: 8,
+                    onChanged: ((value) {
+                      setState(() => calories = value);
+                    })),
+                const SizedBox(height: 8),
+                const Text("Select carbonates"),
+                RangeSlider(
+                    values: carbohydrates,
+                    labels: RangeLabels(carbohydrates.start.toStringAsFixed(1),
+                        carbohydrates.end.toStringAsFixed(1)),
+                    min: 0,
+                    max: 100,
+                    divisions: 8,
+                    onChanged: ((value) {
+                      setState(() => carbohydrates = value);
+                    })),
+                const SizedBox(height: 8),
+                const Text("Select sugar"),
+                RangeSlider(
+                    values: sugar,
+                    labels: RangeLabels(sugar.start.toStringAsFixed(1),
+                        sugar.end.toStringAsFixed(1)),
+                    min: 0,
+                    max: 100,
+                    divisions: 8,
+                    onChanged: ((value) {
+                      setState(() => sugar = value);
+                    })),
+                const SizedBox(height: 38),
+                MaterialButton(
+                    hoverColor: Colors.grey,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(55)),
+                    height: 56,
+                    minWidth: MediaQuery.of(context).size.width,
+                    color: AppColorSchema.flexSchemeLight.primary,
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => const ResultPages())),
+                    child: const Text("Search"))
+              ],
+            ))
           ],
         ),
       ),

@@ -1,8 +1,6 @@
 import 'package:food_track_app/app/models/food_info.dart';
-import 'package:food_track_app/app/models/food_result.dart';
 import 'package:food_track_app/app/services/api.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FoodSearchService {
   final RestAPIWrapper api;
@@ -15,7 +13,7 @@ class FoodSearchService {
   FoodSearchService({required this.api}) {
     _outputStream = _inputStream
         .debounce(
-            (event) => TimerStream(true, const Duration(milliseconds: 5000)))
+            (event) => TimerStream(true, const Duration(milliseconds: 1000)))
         .switchMap((name) async* {
       yield await api.fetchFoodDetailsUsingDishNames(name);
     });

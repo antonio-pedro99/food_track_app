@@ -55,6 +55,7 @@ class _FoodListScreenState extends State<FoodListScreen> {
             controller: searchEditingController,
             hint: "Type the name of the Food",
             icon: Icons.search,
+            /*  onChanged: bloc.searchQuery.add, */
             onEnter: bloc.searchQuery.add,
           ),
           const SizedBox(height: 24),
