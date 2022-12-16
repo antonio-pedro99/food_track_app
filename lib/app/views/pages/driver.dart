@@ -37,7 +37,6 @@ class _PageDriverState extends State<PageDriver> {
         elevation: 0,
       ),
       body: PageView(
-        physics: const BouncingScrollPhysics(),
         controller: _controller,
         children: pages,
         onPageChanged: (p) {

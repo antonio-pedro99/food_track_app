@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+/article_finder
 
 # IntelliJ related
 *.iml

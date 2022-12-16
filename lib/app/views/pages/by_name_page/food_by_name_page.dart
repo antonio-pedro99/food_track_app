@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_track_app/app/providers/food_provider.dart';
+import 'package:food_track_app/app/blocs/foods_bloc.dart';
 import 'package:food_track_app/app/models/food_info.dart';
+import 'package:food_track_app/app/providers/bloc_provider.dart';
 import 'package:food_track_app/app/views/pages/details_page/details_page.dart';
-import 'package:food_track_app/app/views/pages/records_page/records_page.dart';
 import 'package:food_track_app/app/views/widgets/food_tile.dart';
 import 'package:food_track_app/app/views/widgets/text_field.dart';
-import 'package:provider/provider.dart';
 
 class FoodByNamePage extends StatefulWidget {
   const FoodByNamePage({super.key, required this.title});
@@ -17,81 +16,85 @@ class FoodByNamePage extends StatefulWidget {
 }
 
 class _FoodByNamePageState extends State<FoodByNamePage> {
-  final TextEditingController searchEditingController = TextEditingController();
-  var foodsResult = [];
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    var foodProvider = Provider.of<FoodProvider>(context, listen: false);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-              onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const FoodRecordPage()),
-                  ),
-              icon: const Icon(Icons.receipt_long))
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-        child: Column(
-          children: <Widget>[
-            CustomTextField(
-              controller: searchEditingController,
-              hint: "Type the name of the Food",
-              icon: Icons.search,
-              onEnter: (value) {
-                context.read<FoodProvider>().isLoading = true;
-                print("Status ${foodProvider.isLoading}");
-              },
-            ),
-            const SizedBox(height: 24),
-            Flexible(child: Builder(builder: (context) {
-              if (!foodProvider.isLoading) {
-                return Center(
-                    child: Text("${foodProvider.isLoading} Search Something"));
-              }
-              return FutureBuilder<List<Food>>(
-                future: foodProvider.fetchFoodDetailsUsingDishNames(
-                    context, searchEditingController.text),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text(snapshot.error.toString()));
-                  }
-                  var result = snapshot.data!;
-                  return ListView.builder(
-                      itemCount: result.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => FoodDetailsPage(
-                                    food: result[index],
-                                    tag: "${result[index].foodId}$index",
-                                    title: "Food Details")),
-                          ),
-                          child: Hero(
-                              tag: "${result[index].foodId}$index",
-                              child: FoodTile(
-                                food: result[index],
-                              )),
-                        );
-                      });
-                },
-              );
-            }))
+    return BlocProvider(
+      bloc: FoodByNameListBloc(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: [
+            IconButton(onPressed: () => {}, icon: const Icon(Icons.notes))
           ],
         ),
+        body: const FoodListScreen(),
       ),
     );
   }
+}
+
+class FoodListScreen extends StatefulWidget {
+  const FoodListScreen({super.key});
+
+  @override
+  State<FoodListScreen> createState() => _FoodListScreenState();
+}
+
+class _FoodListScreenState extends State<FoodListScreen> {
+  final TextEditingController searchEditingController = TextEditingController();
+  var foodsResult = [];
+
+  @override
+  Widget build(BuildContext context) {
+    var bloc = BlocProvider.of<FoodByNameListBloc>(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      child: Column(
+        children: <Widget>[
+          CustomTextField(
+            controller: searchEditingController,
+            hint: "Type the name of the Food",
+            icon: Icons.search,
+            onEnter: bloc.searchQuery.add,
+          ),
+          const SizedBox(height: 24),
+          Flexible(child: _buildResults(bloc))
+        ],
+      ),
+    );
+  }
+}
+
+Widget _buildResults(FoodByNameListBloc bloc) {
+  return StreamBuilder<List<Food>?>(
+    stream: bloc.foodsStreams,
+    builder: (context, snapshot) {
+      // 2
+      final results = snapshot.data;
+      if (results == null) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (results.isEmpty) {
+        return const Center(child: Text('No Results'));
+      }
+
+      return ListView.builder(
+          itemCount: results.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => FoodDetailsPage(
+                        food: results[index],
+                        tag: "${results[index].foodId}$index",
+                        title: "Food Details")),
+              ),
+              child: Hero(
+                  tag: "${results[index].foodId}$index",
+                  child: FoodTile(
+                    food: results[index],
+                  )),
+            );
+          });
+    },
+  );
 }

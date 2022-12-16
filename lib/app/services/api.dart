@@ -4,14 +4,13 @@ import 'package:food_track_app/app/models/food_result.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 class RestAPIWrapper {
-
-  Future<FoodSearchResult> fetchFoodDetailsUsingDishNames(
-    String searchedFood,
+  Future<List<Food>?> fetchFoodDetailsUsingDishNames(
+    String? searchedFood,
   ) async {
     List<Food> _fetchedFoodList = [];
+
+    Set<String> set = {};
     String foodUrl =
         "https://api.edamam.com/api/food-database/v2/parser?app_id=1aa17d2f&app_key=82a4456156cbb0333c85fa600fae034c%09&ingr=";
     String recipeUrl =
@@ -54,6 +53,10 @@ class RestAPIWrapper {
           "ingredients": recipe["ingredients"],
           "ingredientLines": recipe["ingredientLines"],
         };
+        if (set.contains(food["foodId"])) {
+          continue;
+        }
+        set.add(food["foodId"]);
 
         _fetchedFoodList.add(Food(
           foodId: food.containsKey("foodId") ? food["foodId"] : "-no-foodId-",
@@ -70,10 +73,7 @@ class RestAPIWrapper {
         ));
       }
     }
-    return FoodSearchResult(_fetchedFoodList);
+    print("Result for $searchedFood is $_fetchedFoodList");
+    return _fetchedFoodList;
   }
 }
-
-final searchRepositoryProvider = Provider<RestAPIWrapper>((ref) {
-  return RestAPIWrapper();
-});
