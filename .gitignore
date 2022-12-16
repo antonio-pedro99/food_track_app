@@ -10,6 +10,9 @@
 .svn/
 migrate_working_dir/
 /article_finder
+/foodIngredientsProvider.dart
+/foodNutrients.dart
+/foodNutrientsProvider.dart
 
 # IntelliJ related
 *.iml

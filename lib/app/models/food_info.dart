@@ -2,7 +2,7 @@ class Food {
   String foodId;
   String label;
   String knownAs;
-  dynamic nutrients;
+  List<dynamic> nutrients;
   String image;
   dynamic recipe;
   List<dynamic> ingredientNameList;
