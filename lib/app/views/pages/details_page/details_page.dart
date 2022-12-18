@@ -4,6 +4,7 @@ import 'package:food_track_app/app/models/food_info.dart';
 import 'package:food_track_app/app/models/ingredient.dart';
 import 'package:food_track_app/app/views/widgets/ingredient_tile.dart';
 import 'package:food_track_app/app/views/widgets/nutrient_tile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FoodDetailsPage extends StatefulWidget {
   const FoodDetailsPage(
@@ -121,6 +122,9 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                                 leading: const Icon(Icons.video_file),
                                 title: Text("Tutorial Video $index"),
                                 subtitle: const Text("Type To Play on Youtube"),
+                                onTap: () async {
+                                  await launch(videos[index]);
+                                },
                               ),
                             );
                           }),

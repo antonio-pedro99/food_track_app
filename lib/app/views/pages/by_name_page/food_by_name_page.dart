@@ -58,6 +58,7 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
                             return ListView.builder(
                                 itemCount: results!.length,
                                 itemBuilder: (context, index) {
+                                  print(results[index]);
                                   return GestureDetector(
                                     onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(
