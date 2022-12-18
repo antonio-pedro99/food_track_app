@@ -43,7 +43,7 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
         ? widget.foodByIngredient!.foodVideoList
             .map((e) => e as String)
             .toList()
-        : [];
+        : widget.food!.foodVideoList.map((e) => e as String).toList();
   }
 
   @override
@@ -81,7 +81,7 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
               const NutrientTile(),
               const SizedBox(height: 24),
               Text(
-                'Ingredients',
+                'Recipe/Ingredients',
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
@@ -108,28 +108,26 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                     .bodyLarge!
                     .copyWith(fontWeight: FontWeight.w500),
               ),
-              widget.foodByIngredient != null
-                  ? SizedBox(
-                      height: MediaQuery.of(context).size.height * .35,
-                      child: ListView.builder(
-                          itemCount: videos.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              clipBehavior: Clip.antiAlias,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: ListTile(
-                                leading: const Icon(Icons.video_file),
-                                title: Text("Tutorial Video $index"),
-                                subtitle: const Text("Type To Play on Youtube"),
-                                onTap: () async {
-                                  await launch(videos[index]);
-                                },
-                              ),
-                            );
-                          }),
-                    )
-                  : const SizedBox()
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .35,
+                child: ListView.builder(
+                    itemCount: videos.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        child: ListTile(
+                          leading: const Icon(Icons.video_file),
+                          title: Text("Tutorial Video $index"),
+                          subtitle: const Text("Type To Play on Youtube"),
+                          onTap: () async {
+                            await launch(videos[index]);
+                          },
+                        ),
+                      );
+                    }),
+              )
             ])),
           )
         ],

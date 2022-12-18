@@ -42,6 +42,7 @@ class RestAPIWrapper {
         continue;
       }
       var recipeList = recipeResults["hits"];
+      var videoList = [];
       for (int i = 0; i < min(2, recipeList.length); i++) {
         if (recipeList.length == 0 || !recipeList[i].containsKey("recipe")) {
           continue;
@@ -59,20 +60,31 @@ class RestAPIWrapper {
           continue;
         }
         set.add(food["foodId"]);
+        final dataBaseResponse2 =
+            await http.get(Uri.parse(_getYoutubeVideoUniqueIdUrl(foodLabel)));
+        final extractedVideoDetails =
+            json.decode(dataBaseResponse2.body) as Map<String, dynamic>;
+        final foodVideoIdList = [];
 
+        for (int j = 0;
+            j < min(3, extractedVideoDetails['items'].length);
+            j++) {
+          String videoId = extractedVideoDetails['items'][j]['id']['videoId'];
+          foodVideoIdList.add(_getYoutubeVideoLink(videoId));
+        }
         fetchedFoodList.add(Food(
-          foodId: food.containsKey("foodId") ? food["foodId"] : "0",
-          label: food.containsKey("label") ? food["label"] : "-no-label-",
-          knownAs:
-              food.containsKey("knownAs") ? food["knownAs"] : "-no-know-as-",
-          nutrients: food.containsKey("nutrients") ? food["nutrients"] : [],
-          image: food.containsKey("image")
-              ? food["image"]
-              : "https://photo-cdn2.icons8.com/LBUcniDezcjVj_WfynHIGLeSu3B9lYhteQL_nTSXCPM/rs:fit:1619:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5h/c3NldHMvYXNzZXRz/L3NhdGEvb3JpZ2lu/YWwvNDgyLzAzNzRk/ZTI5LTcyYzYtNDgx/ZS1iOGFlLWI3YTE1/M2NmMWI1Mi5qcGc.jpg",
-          recipe: food["recipe"],
-          ingredientNameList: recipe["ingredientLines"] as List<dynamic>,
-          ingredientList: recipe["ingredients"] as List<dynamic>,
-        ));
+            foodId: food.containsKey("foodId") ? food["foodId"] : "0",
+            label: food.containsKey("label") ? food["label"] : "-no-label-",
+            knownAs:
+                food.containsKey("knownAs") ? food["knownAs"] : "-no-know-as-",
+            nutrients: food.containsKey("nutrients") ? food["nutrients"] : [],
+            image: food.containsKey("image")
+                ? food["image"]
+                : "https://photo-cdn2.icons8.com/LBUcniDezcjVj_WfynHIGLeSu3B9lYhteQL_nTSXCPM/rs:fit:1619:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5h/c3NldHMvYXNzZXRz/L3NhdGEvb3JpZ2lu/YWwvNDgyLzAzNzRk/ZTI5LTcyYzYtNDgx/ZS1iOGFlLWI3YTE1/M2NmMWI1Mi5qcGc.jpg",
+            recipe: food["recipe"],
+            ingredientNameList: recipe["ingredientLines"] as List<dynamic>,
+            ingredientList: recipe["ingredients"] as List<dynamic>,
+            foodVideoList: foodVideoIdList));
       }
     }
     return fetchedFoodList;

@@ -7,6 +7,7 @@ class Food {
   dynamic recipe;
   List<dynamic> ingredientNameList;
   List<dynamic> ingredientList;
+  List<dynamic> foodVideoList;
 
   Food({
     required this.foodId,
@@ -17,5 +18,6 @@ class Food {
     required this.recipe,
     required this.ingredientNameList,
     required this.ingredientList,
+    required this.foodVideoList
   });
 }
