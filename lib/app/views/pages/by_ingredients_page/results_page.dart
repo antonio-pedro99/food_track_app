@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food_track_app/app/models/food.dart';
+import 'package:food_track_app/app/models/food_info.dart';
 import 'package:food_track_app/app/services/api.dart';
 import 'package:food_track_app/app/views/pages/by_ingredients_page/food_by_ingr_page.dart';
 import 'package:food_track_app/app/views/pages/details_page/details_page.dart';
-import 'package:food_track_app/app/views/widgets/food_tile.dart';
+import 'package:food_track_app/app/views/widgets/food_nutrients_tile.dart';
 
 class ResultPages extends StatefulWidget {
   const ResultPages({super.key, required this.query});
@@ -14,7 +14,7 @@ class ResultPages extends StatefulWidget {
 }
 
 class _ResultPagesState extends State<ResultPages> {
-  late Future<List<FoodByIngredient>?> _data;
+  late Future<List<FoodNutrientsInformation>?> _data;
   @override
   void initState() {
     super.initState();
@@ -22,7 +22,7 @@ class _ResultPagesState extends State<ResultPages> {
   }
 
   Future<void> fetchFoods() async {
-    _data = RestAPIWrapper.fetchFoodByIngredients(widget.query.ingredients);
+    _data = RestAPIWrapper.fetchFoodDetailsUsingNutrients(widget.query);
   }
 
   @override
@@ -34,7 +34,7 @@ class _ResultPagesState extends State<ResultPages> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: FutureBuilder<List<FoodByIngredient>?>(
+          child: FutureBuilder<List<FoodNutrientsInformation>?>(
             future: _data,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
@@ -46,13 +46,13 @@ class _ResultPagesState extends State<ResultPages> {
                         onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => FoodDetailsPage(
-                                    foodByIngredient: results[index],
-                                    tag: "${results[index].foodId}$index",
+                                    nutrientFood: results[index],
+                                    tag: "${results[index]}$index",
                                     title: "Food Details"))),
                         child: Hero(
-                            tag: "${results[index].foodId}$index",
-                            child: FoodTile(
-                              foodByIngredient: results[index],
+                            tag: "${results[index]}$index",
+                            child: FoodNutrientTile(
+                              food: results[index],
                             )),
                       );
                     });

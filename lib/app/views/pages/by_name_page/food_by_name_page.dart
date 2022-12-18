@@ -66,10 +66,10 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
                                             builder: (context) => FoodDetailsPage(
                                                 food: results[index],
                                                 tag:
-                                                    "${results[index]!.foodId}$index",
+                                                    "${results[index]}$index",
                                                 title: "Food Details"))),
                                     child: Hero(
-                                        tag: "${results[index]!.foodId}$index",
+                                        tag: "${results[index]!}$index",
                                         child: FoodTile(
                                           food: results[index],
                                         )),

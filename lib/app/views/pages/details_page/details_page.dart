@@ -12,12 +12,14 @@ class FoodDetailsPage extends StatefulWidget {
       {super.key,
       required this.title,
       this.foodByIngredient,
+      this.nutrientFood,
       this.food,
       this.tag});
   final String title;
   final String? tag;
   final Food? food;
   final FoodByIngredient? foodByIngredient;
+  final FoodNutrientsInformation? nutrientFood;
   @override
   State<FoodDetailsPage> createState() => _FoodDetailsPageState();
 }
@@ -31,22 +33,32 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
     super.initState();
 
     ingredients = widget.food == null
-        ? widget.foodByIngredient!.ingList
-            .map<Ingredient>(
-                (e) => Ingredient.fromJson(e as Map<String, dynamic>))
-            .toList()
-        : widget.food!.ingredientList
-            .map<Ingredient>(
-                (e) => Ingredient.fromJson(e as Map<String, dynamic>))
-            .toList();
+        ? widget.foodByIngredient != null
+            ? widget.foodByIngredient!.ingList
+                .map<Ingredient>(
+                    (e) => Ingredient.fromJson(e as Map<String, dynamic>))
+                .toList()
+            : widget.nutrientFood == null
+                ? widget.food!.ingredientList
+                    .map<Ingredient>(
+                        (e) => Ingredient.fromJson(e as Map<String, dynamic>))
+                    .toList()
+                : widget.nutrientFood!.ingList
+                    .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
+                    .toList()
+        : [];
 
     videos = widget.foodByIngredient != null
         ? widget.foodByIngredient!.foodVideoList
             .map((e) => e as Map<String, dynamic>)
             .toList()
-        : widget.food!.foodVideoList
-            .map((e) => e as Map<String, dynamic>)
-            .toList();
+        : widget.nutrientFood == null
+            ? widget.food!.foodVideoList
+                .map((e) => e as Map<String, dynamic>)
+                .toList()
+            : widget.nutrientFood!.foodVideoList
+                .map((e) => e as Map<String, dynamic>)
+                .toList();
   }
 
   @override
@@ -65,7 +77,9 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                   child: Image.network(
                     widget.food != null
                         ? widget.food!.image
-                        : widget.foodByIngredient!.image,
+                        : widget.foodByIngredient != null
+                            ? widget.foodByIngredient!.image
+                            : widget.nutrientFood!.image,
                     fit: BoxFit.cover,
                   )),
             ),
@@ -76,8 +90,10 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                 delegate: SliverChildListDelegate.fixed([
               Text(
                 widget.food != null
-                    ? widget.food!.label
-                    : widget.foodByIngredient!.title,
+                    ? widget.food!.title
+                    : widget.foodByIngredient != null
+                        ? widget.foodByIngredient!.title
+                        : widget.nutrientFood!.title,
                 style: Theme.of(context).textTheme.headline6,
               ),
               const SizedBox(height: 8),

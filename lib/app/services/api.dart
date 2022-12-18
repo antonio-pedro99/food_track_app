@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:food_track_app/app/models/food.dart';
 import 'package:food_track_app/app/models/food_info.dart';
+import 'package:food_track_app/app/views/pages/by_ingredients_page/food_by_ingr_page.dart';
 import 'package:http/http.dart' as http;
 
 class RestAPIWrapper {
@@ -78,8 +79,7 @@ class RestAPIWrapper {
           });
         }
         fetchedFoodList.add(Food(
-            foodId: food.containsKey("foodId") ? food["foodId"] : "0",
-            label: food.containsKey("label") ? food["label"] : "-no-label-",
+            title: food.containsKey("label") ? food["label"] : "-no-label-",
             knownAs:
                 food.containsKey("knownAs") ? food["knownAs"] : "-no-know-as-",
             nutrients: food.containsKey("nutrients") ? food["nutrients"] : [],
@@ -119,8 +119,6 @@ class RestAPIWrapper {
       final extractedVideoDetails =
           json.decode(dataBaseResponse2.body) as Map<String, dynamic>;
       final foodVideoIdList = [];
-
-      print(extractedVideoDetails);
       for (int j = 0; j < min(3, extractedVideoDetails['items'].length); j++) {
         String videoId = extractedVideoDetails['items'][j]['id']['videoId'];
 
@@ -143,6 +141,81 @@ class RestAPIWrapper {
 
     return fetchedFoodList;
   }
+
+  static Future<List<FoodNutrientsInformation>?> fetchFoodDetailsUsingNutrients(
+      Query query) async {
+    List<FoodNutrientsInformation> fetchedFoodList = [];
+    final dataBaseResponse = await http.get(
+      Uri.parse(
+        getFoodNutrientsUrl(
+            query.minProtein!,
+            query.maxProtein!,
+            query.minFat!,
+            query.maxFat!,
+            query.minCalorie!,
+            query.maxCalorie!,
+            query.minCarbs!,
+            query.maxCarbs!),
+      ),
+    );
+    final extractedFoodDetails =
+        json.decode(dataBaseResponse.body) as List<dynamic>;
+
+    for (int i = 0; i < extractedFoodDetails.length; i++) {
+      String foodId = extractedFoodDetails[i]['id'].toString();
+      String title = extractedFoodDetails[i]['title'].toString();
+      String image = extractedFoodDetails[i]['image'].toString();
+
+      String calories = extractedFoodDetails[i]['calories'].toString();
+      String protein = extractedFoodDetails[i]['protein'].toString();
+      String fat = extractedFoodDetails[i]['fat'].toString();
+      String carbs = extractedFoodDetails[i]['carbs'].toString();
+
+      final dataBaseResponse2 =
+          await http.get(Uri.parse(_getYoutubeVideoUniqueIdUrl(title)));
+      final extractedVideoDetails =
+          json.decode(dataBaseResponse2.body) as Map<String, dynamic>;
+      print(extractedVideoDetails);
+      final foodVideoIdList = [];
+      for (int j = 0; j < min(3, extractedVideoDetails['items'].length); j++) {
+        String videoId = extractedVideoDetails['items'][j]['id']['videoId'];
+        foodVideoIdList.add({
+          "title": extractedVideoDetails['items'][j]['snippet']['title'],
+          "url": _getYoutubeVideoLink(videoId),
+          "thumbnails": extractedVideoDetails["items"][j]["snippet"]
+              ["thumbnails"]["default"]["url"]
+        });
+      }
+
+      final dataBaseResponse3 =
+          await http.get(Uri.parse(getFoodIngFromFoodUrl(title)));
+      final extractedIngDetails =
+          json.decode(dataBaseResponse3.body) as Map<String, dynamic>;
+
+      var ingredientsResults = extractedIngDetails["hits"] as List<dynamic>;
+      if (ingredientsResults.isEmpty) {
+        continue;
+      }
+
+      var ingredients = [];
+      ingredientsResults.forEach((element) {
+        ingredients.addAll(element["recipe"]["ingredients"]);
+      });
+      var foodInfo = FoodNutrientsInformation(
+        title: title,
+        image: image,
+        calories: calories,
+        protein: protein,
+        fat: fat,
+        carbs: carbs,
+        ingList: ingredients,
+        foodVideoList: foodVideoIdList,
+      );
+
+      fetchedFoodList.add(foodInfo);
+    }
+    return fetchedFoodList;
+  }
 }
 
 String _getFoodByIngredientsUrl(List<String> ingList) {
@@ -162,13 +235,36 @@ String _getFoodByIngredientsUrl(List<String> ingList) {
 
 String _getYoutubeVideoUniqueIdUrl(String foodName) {
   String url =
-      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20$foodName%20&key=AIzaSyCXFxU8F5Vtro0jU6_cWuYnxj-sQPnGB70";
+      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20$foodName%20&key=AIzaSyCspdr0fhy8KQz752xCS0fx6Fwk3OceRLY";
 
   return url;
 }
 
 String _getYoutubeVideoLink(String videoId) {
   String url = "https://www.youtube.com/watch?v=$videoId";
+
+  return url;
+}
+
+String getFoodNutrientsUrl(
+  double minProtein,
+  double maxProtein,
+  double minFat,
+  double maxFat,
+  double minCalorie,
+  double maxCalorie,
+  double minCarbs,
+  double maxCarbs,
+) {
+  String url =
+      "https://api.spoonacular.com/recipes/findByNutrients?minProtein=${minProtein}&maxProtein=${maxProtein}&minFat=${minFat}&maxFat=${maxFat}&minCalorie=${minCalorie}&maxCalorie=${maxCalorie}&minCarbs=${minCarbs}&maxCarbs=${maxCarbs}&number=4&apiKey=c113a9368f95459b97eccc5ff749e30d";
+
+  return url;
+}
+
+String getFoodIngFromFoodUrl(String foodName) {
+  String url =
+      "https://api.edamam.com/api/recipes/v2?type=public&app_id=34d7530d&app_key=6f735adbec6cad285898e754e8f52588&q=${foodName}";
 
   return url;
 }

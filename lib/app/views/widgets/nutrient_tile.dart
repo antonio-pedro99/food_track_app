@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class NutrientTile extends StatelessWidget {
   const NutrientTile({super.key});
@@ -16,7 +17,7 @@ class NutrientTile extends StatelessWidget {
               .copyWith(color: Colors.black.withOpacity(.6)),
         ),
         Text(
-          '2 k',
+          '${Random().nextInt(100)} k',
           style: Theme.of(context).textTheme.subtitle2!.copyWith(
               color: Colors.black.withOpacity(.6),
               fontWeight: FontWeight.normal),
@@ -30,7 +31,7 @@ class NutrientTile extends StatelessWidget {
               .copyWith(color: Colors.black.withOpacity(.6)),
         ),
         Text(
-          '45 g',
+          '${Random().nextInt(100)} g',
           style: Theme.of(context).textTheme.subtitle2!.copyWith(
               color: Colors.black.withOpacity(.6),
               fontWeight: FontWeight.normal),
@@ -44,7 +45,7 @@ class NutrientTile extends StatelessWidget {
               .copyWith(color: Colors.black.withOpacity(.6)),
         ),
         Text(
-          '45 g',
+          '${Random().nextInt(100)} g',
           style: Theme.of(context).textTheme.subtitle2!.copyWith(
               color: Colors.black.withOpacity(.6),
               fontWeight: FontWeight.normal),
@@ -58,7 +59,7 @@ class NutrientTile extends StatelessWidget {
               .copyWith(color: Colors.black.withOpacity(.6)),
         ),
         Text(
-          '45 g',
+          '${Random().nextInt(100)} g',
           style: Theme.of(context).textTheme.subtitle2!.copyWith(
               color: Colors.black.withOpacity(.6),
               fontWeight: FontWeight.normal),
@@ -72,7 +73,7 @@ class NutrientTile extends StatelessWidget {
               .copyWith(color: Colors.black.withOpacity(.6)),
         ),
         Text(
-          '45 g',
+          '${Random().nextInt(100)} g',
           style: Theme.of(context).textTheme.subtitle2!.copyWith(
               color: Colors.black.withOpacity(.6),
               fontWeight: FontWeight.normal),
