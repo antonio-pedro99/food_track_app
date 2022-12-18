@@ -9,7 +9,7 @@ class RestAPIWrapper {
   static Future<List<Food>?> fetchFoodDetailsUsingDishNames(
     String? searchedFood,
   ) async {
-    List<Food> _fetchedFoodList = [];
+    List<Food> fetchedFoodList = [];
 
     Set<String> set = {};
     String foodUrl =
@@ -59,7 +59,7 @@ class RestAPIWrapper {
         }
         set.add(food["foodId"]);
 
-        _fetchedFoodList.add(Food(
+        fetchedFoodList.add(Food(
           foodId: food.containsKey("foodId") ? food["foodId"] : "0",
           label: food.containsKey("label") ? food["label"] : "-no-label-",
           knownAs:
@@ -74,9 +74,7 @@ class RestAPIWrapper {
         ));
       }
     }
-
-    print(_fetchedFoodList);
-    return _fetchedFoodList;
+    return fetchedFoodList;
   }
 
   static Future<List<FoodByIngredient>?> fetchFoodByIngredients(
@@ -139,7 +137,7 @@ String _getFoodByIngredientsUrl(List<String> ingList) {
 
 String _getYoutubeVideoUniqueIdUrl(String foodName) {
   String url =
-      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20${foodName}%20&key=AIzaSyA8KD55XiccMczG_5LHEl96coRYD-0AQ1M";
+      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20$foodName%20&key=AIzaSyA8KD55XiccMczG_5LHEl96coRYD-0AQ1M";
 
   return url;
 }

@@ -18,8 +18,6 @@ class _ResultPagesState extends State<ResultPages> {
   @override
   void initState() {
     super.initState();
-
-    print(widget.query.ingredients);
     fetchFoods();
   }
 
