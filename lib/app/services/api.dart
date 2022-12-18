@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'dart:math';
+
 import 'package:food_track_app/app/models/food.dart';
 import 'package:food_track_app/app/models/food_info.dart';
-import 'package:food_track_app/app/models/food_result.dart';
 import 'package:http/http.dart' as http;
-import 'dart:math';
 
 class RestAPIWrapper {
   static Future<List<Food>?> fetchFoodDetailsUsingDishNames(
