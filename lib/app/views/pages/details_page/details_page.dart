@@ -133,7 +133,7 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                                 errorWidget: (context, url, error) =>
                                     const Center(child: Icon(Icons.error)),
                               )),
-                          title: Text("Tutorial Video $index"),
+                          title: Text(videos[index]["title"]),
                           subtitle: const Text("Type To Play on Youtube"),
                           onTap: () async {
                             await launch(videos[index]["url"]);

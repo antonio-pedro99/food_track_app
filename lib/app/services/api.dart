@@ -71,6 +71,7 @@ class RestAPIWrapper {
           String videoId = extractedVideoDetails['items'][j]['id']['videoId'];
 
           foodVideoIdList.add({
+            "title": extractedVideoDetails['items'][j]['snippet']['title'],
             "url": _getYoutubeVideoLink(videoId),
             "thumbnails": extractedVideoDetails["items"][j]["snippet"]
                 ["thumbnails"]["default"]["url"]
@@ -119,10 +120,12 @@ class RestAPIWrapper {
           json.decode(dataBaseResponse2.body) as Map<String, dynamic>;
       final foodVideoIdList = [];
 
+      print(extractedVideoDetails);
       for (int j = 0; j < min(3, extractedVideoDetails['items'].length); j++) {
         String videoId = extractedVideoDetails['items'][j]['id']['videoId'];
 
         foodVideoIdList.add({
+          "title": extractedVideoDetails['items'][j]['snippet']['title'],
           "url": _getYoutubeVideoLink(videoId),
           "thumbnails": extractedVideoDetails["items"][j]["snippet"]
               ["thumbnails"]["default"]["url"]
