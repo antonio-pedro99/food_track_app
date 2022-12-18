@@ -162,7 +162,7 @@ String _getFoodByIngredientsUrl(List<String> ingList) {
 
 String _getYoutubeVideoUniqueIdUrl(String foodName) {
   String url =
-      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20$foodName%20&key=AIzaSyA8KD55XiccMczG_5LHEl96coRYD-0AQ1M";
+      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20$foodName%20&key=AIzaSyCXFxU8F5Vtro0jU6_cWuYnxj-sQPnGB70";
 
   return url;
 }
