@@ -229,13 +229,13 @@ String _getFoodByIngredientsUrl(List<String> ingList) {
   }
 
   String url =
-      "https://api.spoonacular.com/recipes/findByIngredients?ingredients=$val&number=2&apiKey=c113a9368f95459b97eccc5ff749e30d";
+      "https://api.spoonacular.com/recipes/findByIngredients?ingredients=$val&number=2&apiKey=";
   return url;
 }
 
 String _getYoutubeVideoUniqueIdUrl(String foodName) {
   String url =
-      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20$foodName%20&key=AIzaSyCspdr0fhy8KQz752xCS0fx6Fwk3OceRLY";
+      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=how%20to%20make%20$foodName%20&key=";
 
   return url;
 }
@@ -257,7 +257,7 @@ String getFoodNutrientsUrl(
   double maxCarbs,
 ) {
   String url =
-      "https://api.spoonacular.com/recipes/findByNutrients?minProtein=${minProtein}&maxProtein=${maxProtein}&minFat=${minFat}&maxFat=${maxFat}&minCalorie=${minCalorie}&maxCalorie=${maxCalorie}&minCarbs=${minCarbs}&maxCarbs=${maxCarbs}&number=4&apiKey=c113a9368f95459b97eccc5ff749e30d";
+      "https://api.spoonacular.com/recipes/findByNutrients?minProtein=${minProtein}&maxProtein=${maxProtein}&minFat=${minFat}&maxFat=${maxFat}&minCalorie=${minCalorie}&maxCalorie=${maxCalorie}&minCarbs=${minCarbs}&maxCarbs=${maxCarbs}&number=4&apiKey=";
 
   return url;
 }

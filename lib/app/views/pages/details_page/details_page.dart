@@ -46,7 +46,9 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                 : widget.nutrientFood!.ingList
                     .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
                     .toList()
-        : [];
+        : widget.food!.ingredientList
+            .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
+            .toList();
 
     videos = widget.foodByIngredient != null
         ? widget.foodByIngredient!.foodVideoList
