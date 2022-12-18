@@ -35,7 +35,6 @@ class RestAPIWrapper {
 
       var foodLabel = food["label"];
       var recipeResponse = await http.get(Uri.parse("$recipeUrl&q=$foodLabel"));
-      print(recipeResponse);
       var recipeResults =
           json.decode(recipeResponse.body) as Map<String, dynamic>;
       if (!recipeResults.containsKey("hits")) {
@@ -70,7 +69,12 @@ class RestAPIWrapper {
             j < min(3, extractedVideoDetails['items'].length);
             j++) {
           String videoId = extractedVideoDetails['items'][j]['id']['videoId'];
-          foodVideoIdList.add(_getYoutubeVideoLink(videoId));
+
+          foodVideoIdList.add({
+            "url": _getYoutubeVideoLink(videoId),
+            "thumbnails": extractedVideoDetails["items"][j]["snippet"]
+                ["thumbnails"]["default"]["url"]
+          });
         }
         fetchedFoodList.add(Food(
             foodId: food.containsKey("foodId") ? food["foodId"] : "0",
@@ -117,7 +121,12 @@ class RestAPIWrapper {
 
       for (int j = 0; j < min(3, extractedVideoDetails['items'].length); j++) {
         String videoId = extractedVideoDetails['items'][j]['id']['videoId'];
-        foodVideoIdList.add(_getYoutubeVideoLink(videoId));
+
+        foodVideoIdList.add({
+          "url": _getYoutubeVideoLink(videoId),
+          "thumbnails": extractedVideoDetails["items"][j]["snippet"]
+              ["thumbnails"]["default"]["url"]
+        });
       }
 
       fetchedFoodList.add(FoodByIngredient(

@@ -53,12 +53,13 @@ class _FoodByNamePageState extends State<FoodByNamePage> {
                     ? FutureBuilder<List<Food?>?>(
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
-                              ConnectionState.done) {
+                                  ConnectionState.done ||
+                              snapshot.connectionState ==
+                                  ConnectionState.active) {
                             var results = snapshot.data;
                             return ListView.builder(
                                 itemCount: results!.length,
                                 itemBuilder: (context, index) {
-                                  print(results[index]);
                                   return GestureDetector(
                                     onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(

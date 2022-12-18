@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_track_app/app/models/food.dart';
 import 'package:food_track_app/app/models/food_info.dart';
@@ -23,7 +24,7 @@ class FoodDetailsPage extends StatefulWidget {
 
 class _FoodDetailsPageState extends State<FoodDetailsPage> {
   var ingredients = <Ingredient>[];
-  var videos = <String>[];
+  var videos = <Map<String, dynamic>>[];
 
   @override
   void initState() {
@@ -41,9 +42,11 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
 
     videos = widget.foodByIngredient != null
         ? widget.foodByIngredient!.foodVideoList
-            .map((e) => e as String)
+            .map((e) => e as Map<String, dynamic>)
             .toList()
-        : widget.food!.foodVideoList.map((e) => e as String).toList();
+        : widget.food!.foodVideoList
+            .map((e) => e as Map<String, dynamic>)
+            .toList();
   }
 
   @override
@@ -118,11 +121,22 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
-                          leading: const Icon(Icons.video_file),
+                          leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: CachedNetworkImage(
+                                imageUrl: videos[index]["thumbnails"],
+                                height: 60,
+                                width: 60,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    const Center(child: Icon(Icons.error)),
+                              )),
                           title: Text("Tutorial Video $index"),
                           subtitle: const Text("Type To Play on Youtube"),
                           onTap: () async {
-                            await launch(videos[index]);
+                            await launch(videos[index]["url"]);
                           },
                         ),
                       );
