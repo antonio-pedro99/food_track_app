@@ -35,6 +35,7 @@ class RestAPIWrapper {
 
       var foodLabel = food["label"];
       var recipeResponse = await http.get(Uri.parse("$recipeUrl&q=$foodLabel"));
+      print(recipeResponse);
       var recipeResults =
           json.decode(recipeResponse.body) as Map<String, dynamic>;
       if (!recipeResults.containsKey("hits")) {

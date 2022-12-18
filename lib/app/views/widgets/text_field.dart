@@ -21,6 +21,7 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       child: TextFormField(
         controller: controller,
+        textInputAction: TextInputAction.search,
         onChanged: onChanged,
         validator: onValidate,
         onFieldSubmitted: onEnter,
