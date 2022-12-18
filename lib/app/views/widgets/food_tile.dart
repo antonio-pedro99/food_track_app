@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_track_app/app/models/food.dart';
 import 'package:food_track_app/app/models/food_info.dart';
@@ -18,15 +19,21 @@ class FoodTile extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12)),
-              child: Image.network(
-                food == null ? foodByIngredient!.image : food!.image,
-                fit: BoxFit.cover,
-                height: 200,
-              ),
-            ),
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(12),
+                    bottomRight: Radius.circular(12)),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      food == null ? foodByIngredient!.image : food!.image,
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) =>
+                      const Center(child: Icon(Icons.error)),
+                )
+                ),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
