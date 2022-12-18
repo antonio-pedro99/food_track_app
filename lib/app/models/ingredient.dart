@@ -5,7 +5,7 @@ class Ingredient {
   String? food;
   double? weight;
   String? foodCategory;
-  int? foodId;
+  String? foodId;
   String? image;
 
   Ingredient(
@@ -25,7 +25,7 @@ class Ingredient {
     food = json['food'] ?? json["originalName"];
     weight = json['weight'] ?? 0;
     foodCategory = json['foodCategory'] ?? json["aisle"];
-    foodId = json['foodId'] ?? json["id"];
+    foodId = json['foodId'] ?? json["id"].toString();
     image = json['image'];
   }
 

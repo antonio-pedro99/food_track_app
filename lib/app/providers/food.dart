@@ -11,12 +11,12 @@ class FoodSearchService {
   final _inputStream = BehaviorSubject<String>();
 
   FoodSearchService({required this.api}) {
-    _outputStream = _inputStream
+ /*    _outputStream = _inputStream
         .debounce(
             (event) => TimerStream(true, const Duration(milliseconds: 1000)))
         .switchMap((name) async* {
       yield await api.fetchFoodDetailsUsingDishNames(name);
-    });
+    }); */
   }
 
   void searchFood(String name) => _inputStream.add(name);

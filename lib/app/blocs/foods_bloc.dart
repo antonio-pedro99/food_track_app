@@ -12,7 +12,7 @@ class FoodByNameListBloc implements Bloc {
   late Stream<List<Food>?> foodsStreams;
 
   FoodByNameListBloc() {
-    foodsStreams = _searchQueryController.stream
+  /*   foodsStreams = _searchQueryController.stream
         .startWith(null) // 1
         .debounceTime(const Duration(milliseconds: 2000)) // 2
         .switchMap(
@@ -23,7 +23,7 @@ class FoodByNameListBloc implements Bloc {
           .fetchFoodDetailsUsingDishNames(query)
           .asStream()
           .startWith(null);
-    });
+    }); */
   }
 
   @override

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:math';
 
 class RestAPIWrapper {
-  Future<List<Food>?> fetchFoodDetailsUsingDishNames(
+  static Future<List<Food>?> fetchFoodDetailsUsingDishNames(
     String? searchedFood,
   ) async {
     List<Food> _fetchedFoodList = [];
@@ -60,14 +60,14 @@ class RestAPIWrapper {
         set.add(food["foodId"]);
 
         _fetchedFoodList.add(Food(
-          foodId: food.containsKey("foodId") ? food["foodId"] : "-no-foodId-",
+          foodId: food.containsKey("foodId") ? food["foodId"] : "0",
           label: food.containsKey("label") ? food["label"] : "-no-label-",
           knownAs:
               food.containsKey("knownAs") ? food["knownAs"] : "-no-know-as-",
           nutrients: food.containsKey("nutrients") ? food["nutrients"] : [],
           image: food.containsKey("image")
               ? food["image"]
-              : "https://img.icons8.com/external-vitaliy-gorbachev-flat-vitaly-gorbachev/58/null/external-soup-autumn-vitaliy-gorbachev-flat-vitaly-gorbachev.png",
+              : "https://photo-cdn2.icons8.com/LBUcniDezcjVj_WfynHIGLeSu3B9lYhteQL_nTSXCPM/rs:fit:1619:1072/czM6Ly9pY29uczgu/bW9vc2UtcHJvZC5h/c3NldHMvYXNzZXRz/L3NhdGEvb3JpZ2lu/YWwvNDgyLzAzNzRk/ZTI5LTcyYzYtNDgx/ZS1iOGFlLWI3YTE1/M2NmMWI1Mi5qcGc.jpg",
           recipe: food["recipe"],
           ingredientNameList: recipe["ingredientLines"] as List<dynamic>,
           ingredientList: recipe["ingredients"] as List<dynamic>,
